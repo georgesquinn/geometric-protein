@@ -13,9 +13,9 @@ from Bio.PDB import *
 # This will be for parsing the PDB files
 def main(protein_name):
     pdb1 = PDBList()
-    pdb1.retrieve_pdb_file(protein_name)
-    parser = PDBParser()
-
+    pdb1.retrieve_pdb_file(protein_name, pdir='./protein_files')
+    parser = MMCIFParser(QUIET=True)
+    structure = parser.get_structure(protein_name, "./protein_files\\" + protein_name + '.cif')
     # structure = parser.get_structure(protein)
     # f = open('Files/' + fileName, 'r')
     # text = f.read()
