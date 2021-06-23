@@ -6,6 +6,17 @@ Created on Mon Jun 14 13:10:56 2021
 """
 import LengthFinderAla
 import LengthFinderVal
-protein_name = "2dn2"
+import LengthFinderLeu
+import LengthFinderIle
+import LengthFinderMet
+import LengthFinderPhe
+import LengthFinderPro
+protein_name = "7AKO"
 print("Ala length is: " + format(LengthFinderAla.main(protein_name)))
 print("Val length is: " + format(LengthFinderVal.main(protein_name)))
+print("Leu length is: " + format(LengthFinderLeu.main(protein_name)))
+print("Ile length is: " + format(LengthFinderIle.main(protein_name)))
+print("Met length is: " + format(LengthFinderMet.main(protein_name)))
+print("Phe length is: " + format(LengthFinderPhe.main(protein_name)))
+print("Pro length is: " + format(LengthFinderPro.main(protein_name)))
+

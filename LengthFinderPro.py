@@ -24,13 +24,15 @@ def main(protein_name):
                 ca_vector = residue['CA'].get_vector()
                 cb_vector = residue['CB'].get_vector()
                 norm_vec = (cb_vector - ca_vector).normalized()
-                if resname == "VAL":
-                    cg1_vector = residue['CG1'].get_vector() - ca_vector
-                    cg1_projdist = cg1_vector * norm_vec
-                    cg2_vector = residue['CG2'].get_vector() - ca_vector
-                    cg2_projdist = cg2_vector * norm_vec
-                    dist_array.append(cg1_projdist)
-                    dist_array.append(cg2_projdist)
+                if resname == "PRO":
+                    # for atom in residue:
+                    #     print(format(atom))
+                    cb_vector = residue['CB'].get_vector() - ca_vector
+                    cg_vector = residue['CG'].get_vector() - ca_vector
+                    cd_vector = residue['CD'].get_vector() - ca_vector
+                    avg_vec = (cb_vector + cg_vector + cd_vector) / 3
+                    avg_protdist = avg_vec * norm_vec
+                    dist_array.append(avg_protdist)
 
     avg_length = 0
     for bond_length in dist_array:

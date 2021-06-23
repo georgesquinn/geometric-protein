@@ -20,17 +20,17 @@ def main(protein_name):
     for chain in structure[0]:
         for residue in chain:
             resname = residue.get_resname()
-            if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" or resname == "ILE" or resname == "LEU":
+            if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" \
+                    or resname == "ILE" or resname == "LEU":
                 ca_vector = residue['CA'].get_vector()
                 cb_vector = residue['CB'].get_vector()
                 norm_vec = (cb_vector - ca_vector).normalized()
-                if resname == "VAL":
-                    cg1_vector = residue['CG1'].get_vector() - ca_vector
-                    cg1_projdist = cg1_vector * norm_vec
-                    cg2_vector = residue['CG2'].get_vector() - ca_vector
-                    cg2_projdist = cg2_vector * norm_vec
-                    dist_array.append(cg1_projdist)
-                    dist_array.append(cg2_projdist)
+                if resname == "ILE":
+                    # for atom in residue:
+                    #     print(format(atom))
+                    cd1_vector = residue['CD1'].get_vector() - ca_vector
+                    cd1_projdist = cd1_vector * norm_vec
+                    dist_array.append(cd1_projdist)
 
     avg_length = 0
     for bond_length in dist_array:
