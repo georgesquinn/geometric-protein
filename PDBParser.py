@@ -16,6 +16,14 @@ def main(protein_name):
     pdb1.retrieve_pdb_file(protein_name, pdir='./protein_files')
     parser = MMCIFParser(QUIET=True)
     structure = parser.get_structure(protein_name, "./protein_files\\" + protein_name + '.cif')
+    for chain in structure[0]:
+        for residue in chain:
+            resname = residue.get_resname()
+            if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" or resname == "ILE" or resname == "LEU":
+                ca_vector = residue['CA'].get_vector()
+                cb_vector = residue['CB'].get_vector()
+                norm_ang = (cb_vector - ca_vector).normalized()
+                print(format(norm_ang))
     # structure = parser.get_structure(protein)
     # f = open('Files/' + fileName, 'r')
     # text = f.read()
@@ -33,7 +41,7 @@ def main(protein_name):
     #     #print(format(atomsArray))
     #     print(format(len(atomsArray)))
     #     print(format(atomsArray[len(atomsArray) - 1]))
-    #     #TODO: Make it make seperate lists for each subunit
+    #     #TODO: Make it make separate lists for each subunit
     #     #TODO: Make sure there's no issues with numbers
     #     peptideNumber = int((re.findall('[\S]+', atomsArray[len(atomsArray) - 1]))[5])
     #     print(format(peptideNumber))
