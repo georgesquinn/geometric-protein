@@ -17,7 +17,6 @@ def main(protein_name):
     parser = MMCIFParser(QUIET=True)
     structure = parser.get_structure(protein_name, "./protein_files\\" + protein_name + '.cif')
     ala_array = []
-    #Average Ala length is 1.5262740701436996
     for chain in structure[0]:
         for residue in chain:
             resname = residue.get_resname()
@@ -31,4 +30,4 @@ def main(protein_name):
     for bond_length in ala_array:
         avg_length += bond_length
     avg_length /= len(ala_array)
-    print(avg_length)
+    return(avg_length)
