@@ -21,12 +21,11 @@ def main(protein_name):
         for residue in chain:
             resname = residue.get_resname()
             if resname != "HOH" and resname != "STU" and resname != "EDO" and resname != "ZN" and resname != "GOL":
-                print(resname)
                 ca_coords = residue['CA'].get_coord()
                 f.write(format(ca_coords[0]) + " " + format(ca_coords[1]) + " " + format(ca_coords[2]) + "\n")
         for residue in chain:
             resname = residue.get_resname()
-            if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" or resname == "ILE" or resname == "LEU":
+            if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" or resname == "ILE" or resname == "LEU" or resname == "TYR" or resname == "TRP":
                 if resname == "ALA":
                     f.write("A ")
                 if resname == "VAL":
@@ -41,8 +40,12 @@ def main(protein_name):
                     f.write("I ")
                 if resname == "LEU":
                     f.write("L ")
+                if resname == "TYR":
+                    f.write("Y ")
+                if resname == "TRP":
+                    f.write("W ")
                 ca_coords = residue['CA'].get_coord()
-                f.write(format(ca_coords[0]) + " " + format(ca_coords[1]) + " " + format(ca_coords[2]))
+                f.write(format(ca_coords[0]) + " " + format(ca_coords[1]) + " " + format(ca_coords[2]) + " ")
                 cb_coords = residue['CB'].get_coord()
                 f.write(format(cb_coords[0]) + " " + format(cb_coords[1]) + " " + format(cb_coords[2]) + "\n")
     f.close()

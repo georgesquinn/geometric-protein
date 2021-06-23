@@ -11,6 +11,7 @@ import LengthFinderIle
 import LengthFinderMet
 import LengthFinderPhe
 import LengthFinderPro
+import LengthFinderTyr
 protein_name = "7AKO"
 print("Ala length is: " + format(LengthFinderAla.main(protein_name)))
 print("Val length is: " + format(LengthFinderVal.main(protein_name)))
@@ -19,4 +20,5 @@ print("Ile length is: " + format(LengthFinderIle.main(protein_name)))
 print("Met length is: " + format(LengthFinderMet.main(protein_name)))
 print("Phe length is: " + format(LengthFinderPhe.main(protein_name)))
 print("Pro length is: " + format(LengthFinderPro.main(protein_name)))
+print("Tyr length is: " + format(LengthFinderTyr.main(protein_name)))
 
