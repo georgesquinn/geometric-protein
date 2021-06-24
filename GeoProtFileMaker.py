@@ -20,7 +20,8 @@ def main(protein_name):
     for chain in structure[0]:
         for residue in chain:
             resname = residue.get_resname()
-            if resname != "HOH" and resname != "STU" and resname != "EDO" and resname != "ZN" and resname != "GOL":
+            if resname != "HOH" and resname != "STU" and resname != "EDO" and resname != "ZN" and resname != "GOL" and resname != "CRO":
+                #print(resname)
                 ca_coords = residue['CA'].get_coord()
                 f.write(format(ca_coords[0]) + " " + format(ca_coords[1]) + " " + format(ca_coords[2]) + "\n")
         for residue in chain:
