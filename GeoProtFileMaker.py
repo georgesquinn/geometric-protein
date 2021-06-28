@@ -8,21 +8,30 @@ import sys
 import re
 import numpy as np
 from Bio.PDB import *
-
+import os
 
 # This will be for parsing the PDB files
 def main(protein_name):
+    print("Now processing protein: " + protein_name)
     pdb1 = PDBList()
-    pdb1.retrieve_pdb_file(protein_name, pdir='./protein_files')
+    pdb1.retrieve_pdb_file(protein_name, pdir='./protein_files', file_format='mmCif')
     parser = MMCIFParser(QUIET=True)
     structure = parser.get_structure(protein_name, "./protein_files\\" + protein_name + '.cif')
     f = open("./gpf_files/" + protein_name + ".gpf", 'w')
     for chain in structure[0]:
         for residue in chain:
             resname = residue.get_resname()
-            if resname != "HOH" and resname != "STU" and resname != "EDO" and resname != "ZN" and resname != "GOL" and resname != "CRO":
+            if resname != "HOH" and resname != "STU" and resname != "EDO" and resname != "ZN" and resname != "GOL" and \
+                    resname != "CRO" and resname != "MG" and resname != "AZI" and resname != "MPD":
                 #print(resname)
-                ca_coords = residue['CA'].get_coord()
+                try:
+                    ca_coords = residue['CA'].get_coord()
+                except:
+                    f.close()
+                    os.remove("./gpf_files/" + protein_name + ".gpf")
+                    print("Protein " + protein_name + " skipped for throwing error")
+                    print("Residue that caused error: " + resname)
+                    return False
                 f.write(format(ca_coords[0]) + " " + format(ca_coords[1]) + " " + format(ca_coords[2]) + "\n")
         for residue in chain:
             resname = residue.get_resname()
@@ -49,5 +58,6 @@ def main(protein_name):
                 f.write(format(ca_coords[0]) + " " + format(ca_coords[1]) + " " + format(ca_coords[2]) + " ")
                 cb_coords = residue['CB'].get_coord()
                 f.write(format(cb_coords[0]) + " " + format(cb_coords[1]) + " " + format(cb_coords[2]) + "\n")
+    print("GPF file of protein " + protein_name + " successfully created.")
     f.close()
     return True

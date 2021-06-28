@@ -8,12 +8,12 @@ import FindSmallestSphere2Points
 def distance(Ax, Ay, Az, Bx, By, Bz):
     return math.sqrt((Ax - Bx) * (Ax - Bx) + (Ay - By) * (Ay - By) + (Az - Bz) * (Az - Bz))
 
-#Note: Does not find non-privilged 3-point circles!!!! Saves time, but need to edit logic for that to
-#happen again. Look at previous github versions before 6/28/21 for the file that finds non-privileged
-#3-point spheres!
-def main(points_array):
+
+def main(points_array, allowance_constant):
+    points_allowed_outside = len(points_array) * allowance_constant
     center_point = None
     radius = None
+    privileged_sphere = False
     for point1 in points_array:
         for point2 in points_array:
             if point2 == point1:
@@ -26,18 +26,23 @@ def main(points_array):
                 test_radius = distance(point1[0], point1[1], point1[2], test_center[0], test_center[1], test_center[2])
                 if radius is not None and test_radius > radius:
                     continue
-                if FindSmallestSphere2Points.main((point1, point2, point3)) != None:
-                    continue
                 else:
-                    encloses = True
+                    points_outside = 0
                     # print(format(test_radius))
                     for Point in points_array:
                         if distance(Point[0], Point[1], Point[2], test_center[0], test_center[1],
                                     test_center[2]) > test_radius:
-                            encloses = False
+                            points_outside += 1
+                        if points_outside > points_allowed_outside:
                             break
-                    if not encloses:
+                    if points_outside > points_allowed_outside:
                         continue
                     else:
-                        return (radius, center_point, True)
-    return (radius, center_point, False)
+                        if FindSmallestSphere2Points.main((point1, point2, point3)) is None:
+                            privileged_sphere = True
+                        else:
+                            privileged_sphere = False
+                        # print(format(test_radius))
+                        radius = test_radius
+                        center_point = test_center
+    return (radius, center_point, privileged_sphere)
