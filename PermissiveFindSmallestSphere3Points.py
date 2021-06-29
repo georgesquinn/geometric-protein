@@ -38,6 +38,7 @@ def main(points_array, allowance_constant):
                     if points_outside > points_allowed_outside:
                         continue
                     else:
+                        print(format(test_radius))
                         if FindSmallestSphere2Points.main((point1, point2, point3)) is None:
                             privileged_sphere = True
                         else:

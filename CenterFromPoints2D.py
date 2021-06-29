@@ -45,7 +45,7 @@ FinalX = (D - B)/(A-C)
 FinalY = A*FinalX + B
 print('The circle is centered at ' + format(FinalX) + ' , ' + format(FinalY))
 Result = (FinalX, FinalY)
-return Result
+print(format(Result))
 
 
     
