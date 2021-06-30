@@ -1,5 +1,3 @@
-import sys
-import numpy as np
 import math
 import CenterFrom3Points3DScript
 import FindSmallestSphere2Points
@@ -38,7 +36,7 @@ def main(points_array, allowance_constant):
                     if points_outside > points_allowed_outside:
                         continue
                     else:
-                        #print(format(test_radius))
+                        # print(format(test_radius))
                         if FindSmallestSphere2Points.main((point1, point2, point3)) is None:
                             privileged_sphere = True
                         else:
@@ -46,4 +44,4 @@ def main(points_array, allowance_constant):
                         # print(format(test_radius))
                         radius = test_radius
                         center_point = test_center
-    return (radius, center_point, privileged_sphere)
+    return radius, center_point, privileged_sphere

@@ -43,9 +43,9 @@ gamma = random.random() * 2 * math.pi
 a_angle = random.random() * 2 * math.pi
 b_angle = random.random() * 2 * math.pi
 c_angle = random.random() * 2 * math.pi
-point_a = np.vstack([(radius) * math.cos(a_angle), (radius + extra_radius) * math.sin(a_angle), 0])
-point_b = np.vstack([(radius) * math.cos(b_angle), (radius + extra_radius) * math.sin(b_angle), 0])
-point_c = np.vstack([(radius) * math.cos(c_angle), (radius + extra_radius) * math.sin(c_angle), 0])
+point_a = np.vstack([(radius) * math.cos(a_angle), (radius) * math.sin(a_angle), 0])
+point_b = np.vstack([(radius) * math.cos(b_angle), (radius) * math.sin(b_angle), 0])
+point_c = np.vstack([(radius) * math.cos(c_angle), (radius) * math.sin(c_angle), 0])
 rot_matrix_yaw = [[math.cos(alpha), -1 * math.sin(alpha), 0],
                   [math.sin(alpha), math.cos(alpha), 0],
                   [0, 0, 1]]
