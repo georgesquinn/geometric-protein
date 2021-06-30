@@ -9,7 +9,7 @@ import math
 import numpy as np
 import FindSmallestSphere3Points
 import random
-
+import FindSmallestSphere2Points
 def distance(Ax, Ay, Az, Bx, By, Bz):
     return math.sqrt((Ax-Bx)*(Ax-Bx) + (Ay-By)*(Ay-By) + (Az-Bz)*(Az-Bz))
 
@@ -70,6 +70,7 @@ points_array.append((a_prime[0][0] + x_center, a_prime[1][0] + y_center, a_prime
 points_array.append((b_prime[0][0] + x_center, b_prime[1][0] + y_center, b_prime[2][0] + z_center))
 points_array.append((c_prime[0][0] + x_center, c_prime[1][0] + y_center, c_prime[2][0] + z_center))
 #print(format(points_array))
+print(format(FindSmallestSphere2Points.main(((a_prime[0][0] + x_center, a_prime[1][0] + y_center, a_prime[2][0] + z_center), (b_prime[0][0] + x_center, b_prime[1][0] + y_center, b_prime[2][0] + z_center),(c_prime[0][0] + x_center, c_prime[1][0] + y_center, c_prime[2][0] + z_center) ))))
 print("Inner radius is: " + format(radius))
 print("Total radius is: " + format(radius + extra_radius))
 print("Actual center is at (" + format(x_center) + ", " + format(y_center) + ", " + format(z_center) + ")")
