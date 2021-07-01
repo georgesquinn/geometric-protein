@@ -1,7 +1,7 @@
 import math
 
 import GPFConfigParser
-import FindSmallestSphere
+import PermissiveFindSmallestSphere
 
 
 def main(filename):
@@ -17,7 +17,9 @@ def main(filename, config):
             if line[0] == "A" or line[0] == "V" or line[0] == "F" or line[0] == "P" or line[0] == "M" \
                     or line[0] == "I" or line[0] == "L" or line[0] == "Y":
                 hpr_lines.append(line)
-        res_lengths = GPFConfigParser.main(config)
+        config_results = GPFConfigParser.main(config)
+        res_lengths = config_results[0]
+        allowance_constant = config_results[1]
         hp_points = []
         for line in hpr_lines:
             words = line.split()
@@ -47,5 +49,5 @@ def main(filename, config):
                 scaledvec = (normvec[0] * res_lengths[8], normvec[1] * res_lengths[8], normvec[2] * res_lengths[8])
             hp_points.append((float(words[1]) + scaledvec[0], float(words[2]) + scaledvec[1], float(words[3]) + scaledvec[2]))
         # Order is ALWAYS A, V, F, P, M, I, L, Y, W
-        smallest_sphere = FindSmallestSphere.main(hp_points)
+        smallest_sphere = PermissiveFindSmallestSphere.main(hp_points, allowance_constant)
         return smallest_sphere
