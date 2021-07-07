@@ -10,6 +10,7 @@ import numpy as np
 from Bio.PDB import *
 import os
 
+
 # This will be for parsing the PDB files
 def main(protein_name):
     print("Now processing protein: " + protein_name)
@@ -23,7 +24,7 @@ def main(protein_name):
             resname = residue.get_resname()
             if resname != "HOH" and resname != "STU" and resname != "EDO" and resname != "ZN" and resname != "GOL" and \
                     resname != "CRO" and resname != "MG" and resname != "AZI" and resname != "MPD":
-                #print(resname)
+                # print(resname)
                 try:
                     ca_coords = residue['CA'].get_coord()
                 except:
@@ -32,7 +33,8 @@ def main(protein_name):
                     print("Protein " + protein_name + " skipped for throwing error")
                     print("Residue that caused error: " + resname)
                     return False
-                f.write(format(ca_coords[0]) + " " + format(ca_coords[1]) + " " + format(ca_coords[2]) + "\n")
+                f.write(format(ca_coords[0] * 100) + " " + format(ca_coords[1] * 100) + " " + format(
+                    ca_coords[2] * 100) + "\n")
         for residue in chain:
             resname = residue.get_resname()
             if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" or resname == "ILE" or resname == "LEU" or resname == "TYR" or resname == "TRP":
@@ -55,9 +57,11 @@ def main(protein_name):
                 if resname == "TRP":
                     f.write("W ")
                 ca_coords = residue['CA'].get_coord()
-                f.write(format(ca_coords[0]) + " " + format(ca_coords[1]) + " " + format(ca_coords[2]) + " ")
+                f.write(format(ca_coords[0] * 100) + " " + format(ca_coords[1] * 100) + " " + format(
+                    ca_coords[2] * 100) + " ")
                 cb_coords = residue['CB'].get_coord()
-                f.write(format(cb_coords[0]) + " " + format(cb_coords[1]) + " " + format(cb_coords[2]) + "\n")
+                f.write(format(cb_coords[0] * 100) + " " + format(cb_coords[1] * 100) + " " + format(
+                    cb_coords[2] * 100) + "\n")
     print("GPF file of protein " + protein_name + " successfully created.")
     f.close()
     return True

@@ -19,7 +19,7 @@ def main(filename, config):
                 hpr_lines.append(line)
         config_results = GPFConfigParser.main(config)
         res_lengths = config_results[0]
-        allowance_constant = config_results[1]
+        exemption_constant = config_results[1]
         hp_points = []
         for line in hpr_lines:
             words = line.split()
@@ -49,5 +49,5 @@ def main(filename, config):
                 scaledvec = (normvec[0] * res_lengths[8], normvec[1] * res_lengths[8], normvec[2] * res_lengths[8])
             hp_points.append((float(words[1]) + scaledvec[0], float(words[2]) + scaledvec[1], float(words[3]) + scaledvec[2]))
         # Order is ALWAYS A, V, F, P, M, I, L, Y, W
-        smallest_sphere = PermissiveFindSmallestSphere.main(hp_points, allowance_constant)
+        smallest_sphere = PermissiveFindSmallestSphere.main(hp_points, exemption_constant)
         return smallest_sphere

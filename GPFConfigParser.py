@@ -3,10 +3,10 @@ def main(config):
         # Order is ALWAYS A, V, F, P, M, I, L, Y, W
         config_lines = reader.readlines()
         lengths = []
-        allowance_constant = .1
+        exemption_constant = .1
         lengths = [0 for i in range(20)]
-        lengths = [1.530085265636444, 2.0762536847600463, 2.6979114702040614, 1.4328493516136427, 3.5248065567136107,
-                   3.059942527696086, 2.7475912310394075, 2.716511252921925, 2.800000000000000]
+        lengths = [153.0085265636444, 207.62536847600463, 269.79114702040614, 143.28493516136427, 352.48065567136107,
+                   305.9942527696086, 274.75912310394075, 271.6511252921925, 280.0000000000000]
         for line in config_lines:
             words = line.split()
             if words[0].upper() == "A":
@@ -27,6 +27,6 @@ def main(config):
                 lengths[7] = float(words[1])
             if words[0].upper() == "W":
                 lengths[8] = float(words[1])
-            if words[0].upper() == "AC":
-                allowance_constant = float(words[1])
-    return lengths, allowance_constant
+            if words[0].upper() == "EC":
+                exemption_constant = float(words[1])
+    return lengths, exemption_constant
