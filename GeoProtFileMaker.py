@@ -4,9 +4,6 @@ Created on Mon Jun 14 10:59:30 2021
 
 @author: Peter
 """
-import sys
-import re
-import numpy as np
 from Bio.PDB import *
 import os
 
@@ -17,7 +14,11 @@ def main(protein_name):
     pdb1 = PDBList()
     pdb1.retrieve_pdb_file(protein_name, pdir='./protein_files', file_format='mmCif')
     parser = MMCIFParser(QUIET=True)
-    structure = parser.get_structure(protein_name, "./protein_files\\" + protein_name + '.cif')
+    try:
+        structure = parser.get_structure(protein_name, "./protein_files\\" + protein_name + '.cif')
+    except:
+        print("Protein " + protein_name + " skipped for throwing error in structure step")
+        return False
     f = open("./gpf_files/" + protein_name + ".gpf", 'w')
     for chain in structure[0]:
         for residue in chain:
@@ -30,7 +31,7 @@ def main(protein_name):
                 except:
                     f.close()
                     os.remove("./gpf_files/" + protein_name + ".gpf")
-                    print("Protein " + protein_name + " skipped for throwing error")
+                    print("Protein " + protein_name + " skipped for throwing error in alpha backbone step")
                     print("Residue that caused error: " + resname)
                     return False
                 f.write(format(ca_coords[0] * 100) + " " + format(ca_coords[1] * 100) + " " + format(
@@ -56,12 +57,19 @@ def main(protein_name):
                     f.write("Y ")
                 if resname == "TRP":
                     f.write("W ")
-                ca_coords = residue['CA'].get_coord()
-                f.write(format(ca_coords[0] * 100) + " " + format(ca_coords[1] * 100) + " " + format(
-                    ca_coords[2] * 100) + " ")
-                cb_coords = residue['CB'].get_coord()
-                f.write(format(cb_coords[0] * 100) + " " + format(cb_coords[1] * 100) + " " + format(
-                    cb_coords[2] * 100) + "\n")
+                try:
+                    ca_coords = residue['CA'].get_coord()
+                    f.write(format(ca_coords[0] * 100) + " " + format(ca_coords[1] * 100) + " " + format(
+                        ca_coords[2] * 100) + " ")
+                    cb_coords = residue['CB'].get_coord()
+                    f.write(format(cb_coords[0] * 100) + " " + format(cb_coords[1] * 100) + " " + format(
+                        cb_coords[2] * 100) + "\n")
+                except:
+                    f.close()
+                    os.remove("./gpf_files/" + protein_name + ".gpf")
+                    print("Protein " + protein_name + " skipped for throwing error in hydrophobic step")
+                    print("Residue that caused error: " + resname)
+                    return False
     print("GPF file of protein " + protein_name + " successfully created.")
     f.close()
     return True
