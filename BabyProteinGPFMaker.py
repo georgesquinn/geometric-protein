@@ -1,5 +1,5 @@
 import csv
-import GeoProtFileMaker
+import GPFMaker
 
 results = []
 with open("baby_protein_ids.txt") as csvfile:
@@ -9,4 +9,4 @@ with open("baby_protein_ids.txt") as csvfile:
             results.append(element)
 print(format(results))
 for protein_id in results:
-    GeoProtFileMaker.main(protein_id)
+    GPFMaker.main(protein_id)
