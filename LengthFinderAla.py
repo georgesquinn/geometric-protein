@@ -30,4 +30,5 @@ def main(protein_name):
     for bond_length in ala_array:
         avg_length += bond_length
     avg_length /= len(ala_array)
-    return(avg_length)
+    std_dev = np.std(ala_array)
+    return(avg_length, std_dev)
