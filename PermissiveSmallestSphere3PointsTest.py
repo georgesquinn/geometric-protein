@@ -78,4 +78,3 @@ print("Actual center is at (" + format(x_center) + ", " + format(y_center) + ", 
 sphere_produced = PermissiveFindSmallestSphere3Points.main(points_array, .1)
 print("Calculated radius is: " + format(sphere_produced[0]))
 print("Calculated center is: " + format(sphere_produced[1]))
-print(format(sphere_produced[2]))

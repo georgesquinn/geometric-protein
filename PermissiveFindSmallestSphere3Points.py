@@ -11,13 +11,14 @@ def main(points_array, allowance_constant):
     points_allowed_outside = len(points_array) * allowance_constant
     center_point = None
     radius = None
-    privileged_sphere = False
     for point1 in points_array:
         for point2 in points_array:
             if point2 == point1:
                 continue
             for point3 in points_array:
                 if point3 == point1 or point3 == point2:
+                    continue
+                if FindSmallestSphere2Points.main((point1, point2, point3)) is not None:
                     continue
                 test_center = CenterFrom3Points3DScript.main(point1[0], point1[1], point1[2], point2[0], point2[1],
                                                              point2[2], point3[0], point3[1], point3[2])
@@ -37,11 +38,7 @@ def main(points_array, allowance_constant):
                         continue
                     else:
                         # print(format(test_radius))
-                        if FindSmallestSphere2Points.main((point1, point2, point3)) is None:
-                            privileged_sphere = True
-                        else:
-                            privileged_sphere = False
                         # print(format(test_radius))
                         radius = test_radius
                         center_point = test_center
-    return radius, center_point, privileged_sphere
+    return radius, center_point

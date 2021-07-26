@@ -2,7 +2,7 @@ import sys
 import numpy as np
 import math
 import CenterFrom4Points3DScript
-
+import FindSmallestSphere2Points
 
 def distance(Ax, Ay, Az, Bx, By, Bz):
     return math.sqrt((Ax - Bx) * (Ax - Bx) + (Ay - By) * (Ay - By) + (Az - Bz) * (Az - Bz))
@@ -21,6 +21,8 @@ def main(points_array, allowance_constant):
                     continue
                 for point4 in points_array:
                     if point4 == point1 or point4 == point2 or point4 == point3:
+                        continue
+                    if FindSmallestSphere2Points.main((point1, point2, point3, point4)) is not None:
                         continue
                     test_center = CenterFrom4Points3DScript.main(point1[0], point1[1], point1[2], point2[0], point2[1],
                                                                  point2[2], point3[0], point3[1], point3[2], point4[0],
@@ -45,4 +47,4 @@ def main(points_array, allowance_constant):
                             # print(format(point1) + format(point2) + format(point3) + format(point4))
                             radius = test_radius
                             center_point = test_center
-    return (radius, center_point)
+    return radius, center_point

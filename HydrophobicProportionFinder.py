@@ -4,7 +4,6 @@ proportions = []
 for filename in os.scandir("./gpf_files"):
     if filename.is_file() and filename.name[-4:] == ".gpf":
         protein_name = filename.name[:-4]
-        print("Protein " + protein_name + " processing.")
         hydrophobic_residues = 0
         alpha_carbons = 0
         with open(filename.path, 'r') as reader:
@@ -19,7 +18,7 @@ for filename in os.scandir("./gpf_files"):
 avg_proportion = 0
 for proportion in proportions:
     avg_proportion += proportion
-avg_proportion /= len(proportion)
+avg_proportion /= len(proportions)
 std_dev = np.std(proportions)
 print("Average proportion of hydrophobic residues to backbone carbons is: " + format(avg_proportion))
 print("Standard deviation is: " + format(std_dev))
