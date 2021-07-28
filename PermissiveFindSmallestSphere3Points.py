@@ -7,8 +7,8 @@ def distance(Ax, Ay, Az, Bx, By, Bz):
     return math.sqrt((Ax - Bx) * (Ax - Bx) + (Ay - By) * (Ay - By) + (Az - Bz) * (Az - Bz))
 
 
-def main(points_array, allowance_constant):
-    points_allowed_outside = len(points_array) * allowance_constant
+def main(points_array, exemption_constant):
+    points_allowed_outside = len(points_array) * exemption_constant
     center_point = None
     radius = None
     for point1 in points_array:

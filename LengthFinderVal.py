@@ -29,8 +29,7 @@ def main(protein_name):
                     cg1_projdist = cg1_vector * norm_vec
                     cg2_vector = residue['CG2'].get_vector() - ca_vector
                     cg2_projdist = cg2_vector * norm_vec
-                    dist_array.append(cg1_projdist)
-                    dist_array.append(cg2_projdist)
+                    dist_array.append((cg1_projdist + cg2_projdist) / 2)
 
     avg_length = 0
     for bond_length in dist_array:

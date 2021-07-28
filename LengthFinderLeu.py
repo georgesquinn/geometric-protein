@@ -31,8 +31,7 @@ def main(protein_name):
                     cd1_projdist = cd1_vector * norm_vec
                     cd2_vector = residue['CD2'].get_vector() - ca_vector
                     cd2_projdist = cd2_vector * norm_vec
-                    dist_array.append(cd1_projdist)
-                    dist_array.append(cd2_projdist)
+                    dist_array.append((cd1_projdist + cd2_projdist)/2)
 
     avg_length = 0
     for bond_length in dist_array:
