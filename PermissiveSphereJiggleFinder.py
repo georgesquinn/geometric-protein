@@ -71,7 +71,7 @@ def main(points_array, exemption_constant):
             center = front_jiggle
             radius = front_jiggle_radius
             continue
-        if jiggle_constant < 100:
+        if jiggle_constant < 200:
             iterating = True
             if jiggle_constant < 10:
                 jiggle_constant += .5

@@ -1,19 +1,19 @@
 import json
 from os.path import exists
 import os
-import GPFToMESByEC
+import GPFToAnnealMESByEC
 import concurrent.futures
 import multiprocessing as mp
 
-
 global protein_dict
 protein_dict = {}
-if exists("./babyprots.json"):
-    with open("./babyprots.json", 'r') as f:
+if exists("./annealbabyprots.json"):
+    with open("./annealbabyprots.json", 'r') as f:
         protein_dict = json.load(f)
 else:
-    with open("./babyprots.json", 'w') as f:
+    with open("./annealbabyprots.json", 'w') as f:
         json.dump(protein_dict, f)
+
 
 def process_protein(protein_name, lock):
     hydrophobic_residues = 0
@@ -27,15 +27,15 @@ def process_protein(protein_name, lock):
     if hydrophobic_residues < 42 or hydrophobic_residues > 85:
         return None
     print("Now processing protein " + protein_name)
-    mes_array = GPFToMESByEC.main(protein_name)
+    mes_array = GPFToAnnealMESByEC.main(protein_name)
     lock.acquire()
     # print("Lock acquired by process on protein " + protein_name)
-    if exists("./babyprots.json"):
-        with open("./babyprots.json", 'r') as f:
+    if exists("./annealbabyprots.json"):
+        with open("./annealbabyprots.json", 'r') as f:
             protein_dict = json.load(f)
     protein_dict[protein_name] = (hydrophobic_residues, mes_array[0], mes_array[1])
     # print("Dict modified by process on protein " + protein_name)
-    with open("./babyprots.json", 'w') as f:
+    with open("./annealbabyprots.json", 'w') as f:
         # print("File opened by process on protein " + protein_name)
         json.dump(protein_dict, f)
         print("Protein " + protein_name + " processed.")
