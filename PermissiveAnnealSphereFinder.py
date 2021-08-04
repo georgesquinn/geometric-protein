@@ -9,29 +9,33 @@ def distance(Ax, Ay, Az, Bx, By, Bz):
 
 
 def generate_move(sphere_center, std_dev):
-    theta = random.random() * math.pi
-    phi = random.random() * 2 * math.pi
-    point_radius = std_dev * .1 * random.random()
-    x = point_radius * math.sin(theta) * math.cos(phi) + sphere_center[0]
-    y = point_radius * math.sin(theta) * math.sin(phi) + sphere_center[1]
-    z = point_radius * math.cos(theta) + sphere_center[2]
-    return x, y, z
+    move_radius = std_dev * .1 * random.random()
+    iterating = True
+    x_shift = 0
+    y_shift = 0
+    z_shift = 0
+    while iterating:
+        x_shift = ((random.random() - .5) * 2) * move_radius
+        y_shift = ((random.random() - .5) * 2) * move_radius
+        z_shift = ((random.random() - .5) * 2) * move_radius
+        if distance(x_shift, y_shift, z_shift, 0, 0, 0) < move_radius:
+            iterating = False
+    return sphere_center[0] + x_shift, sphere_center[1] + y_shift, sphere_center[2] + z_shift
 
 
-def anneal(sphere_center, points_array, std_dev, temperature, allowed_outside):
-    current_radius = sphere_radius(sphere_center, points_array, allowed_outside)
+def anneal(sphere_center, radius, points_array, std_dev, temperature, allowed_outside):
     new_center = generate_move(sphere_center, std_dev)
     new_radius = sphere_radius(new_center, points_array, allowed_outside)
-    if new_radius < current_radius:
-        return new_center
-    exponent = decimal.Decimal(-1 * ((new_radius - current_radius) / temperature))
+    if new_radius < radius:
+        return new_radius, new_center
+    exponent = decimal.Decimal(-1 * ((new_radius - radius) / temperature))
     # e = decimal.Decimal(math.e)
     # probability = e ** exponent
     probability = exponent.exp()
-    # exp raises e to the number it's used on
+    # exp raises e to the number it's used on. Generates in range from 0 to 1.
     if probability > random.random():
-        return new_center
-    return sphere_center
+        return new_radius, new_center
+    return radius, sphere_center
 
 
 def main(points_array, exemption_constant):
@@ -54,10 +58,13 @@ def main(points_array, exemption_constant):
     std_dev = np.std(distance_array(center, points_array))
     radius = 0
     temperature = 1000
+    radius = sphere_radius(center, points_array, allowed_outside)
     while temperature > 0:
         temperature -= .1
-        center = anneal(center, points_array, std_dev, temperature, allowed_outside)
-    radius = sphere_radius(center, points_array, allowed_outside)
+        sphere = anneal(center, radius, points_array, std_dev, temperature, allowed_outside)
+        radius = sphere[0]
+        center = sphere[1]
+    # radius = sphere_radius(center, points_array, allowed_outside)
     return radius, center
 
 
