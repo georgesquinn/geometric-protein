@@ -1,14 +1,27 @@
+import GPFConfigParser
 import math
 
-import GPFConfigParser
-import PermissiveSphereJiggleFinder
+
+def distance(Ax, Ay, Az, Bx, By, Bz):
+    return math.sqrt((Ax - Bx) * (Ax - Bx) + (Ay - By) * (Ay - By) + (Az - Bz) * (Az - Bz))
 
 
-def main(filename):
-    main(filename, "default")
+def get_first_element(tuple_element):
+    return tuple_element[0]
 
 
-def main(filename, config):
+def distance_array(center_point, points_array):
+    distances = []
+    for point in points_array:
+        distances.append(
+            ((distance(center_point[0], center_point[1], center_point[2], point[0][0], point[0][1], point[0][2])),
+            point[1]))
+    distances.sort(reverse=True, key=get_first_element)
+    # Setting reverse to True gets us descending order, which is what we want!
+    return distances
+
+
+def main(filename, config, center_point):
     with open("./gpf_files/" + filename + ".gpf", 'r') as reader:
         gpf_lines = reader.readlines()
         # hydrophobic residue lines
@@ -47,7 +60,8 @@ def main(filename, config):
                 scaledvec = (normvec[0] * res_lengths[7], normvec[1] * res_lengths[7], normvec[2] * res_lengths[7])
             if words[0] == "W":
                 scaledvec = (normvec[0] * res_lengths[8], normvec[1] * res_lengths[8], normvec[2] * res_lengths[8])
-            hp_points.append((float(words[1]) + scaledvec[0], float(words[2]) + scaledvec[1], float(words[3]) + scaledvec[2]))
+            hp_points.append(
+                ((float(words[1]) + scaledvec[0], float(words[2]) + scaledvec[1], float(words[3]) + scaledvec[2]),
+                words[0]))
         # Order is ALWAYS A, V, F, P, M, I, L, Y, W
-        smallest_sphere = PermissiveSphereJiggleFinder.main(hp_points, exemption_constant)
-        return smallest_sphere
+        return distance_array(center_point, hp_points)[0]

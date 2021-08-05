@@ -15,7 +15,7 @@ def main(filename, config):
         hpr_lines = []
         for line in gpf_lines:
             if line[0] == "A" or line[0] == "V" or line[0] == "F" or line[0] == "P" or line[0] == "M" \
-                    or line[0] == "I" or line[0] == "L" or line[0] == "Y":
+                    or line[0] == "I" or line[0] == "L" or line[0] == "Y" or line[0] == "W":
                 hpr_lines.append(line)
         config_results = GPFConfigParser.main(config)
         res_lengths = config_results[0]

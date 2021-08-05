@@ -51,7 +51,7 @@ if __name__ == '__main__':
     for filename in filenames:
         if filename.is_file() and filename.name[-4:] == ".gpf" and filename.name[:-4:] not in protein_dict:
             protein_names.append(filename.name[:-4])
-    # print(format(protein_names))
+    print(format(protein_names))
     if mp.cpu_count() < 4:
         with concurrent.futures.ProcessPoolExecutor() as executor:
             futures = executor.map(process_protein, protein_names, [lock] * len(protein_names))
