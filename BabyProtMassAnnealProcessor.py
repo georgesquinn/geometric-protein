@@ -7,11 +7,12 @@ import multiprocessing as mp
 
 global protein_dict
 protein_dict = {}
-if exists("./annealbabyprots.json"):
-    with open("./annealbabyprots.json", 'r') as f:
+FILE_LOCATION = "./annealbabyprots.json"
+if exists(FILE_LOCATION):
+    with open(FILE_LOCATION, 'r') as f:
         protein_dict = json.load(f)
 else:
-    with open("./annealbabyprots.json", 'w') as f:
+    with open(FILE_LOCATION, 'w') as f:
         json.dump(protein_dict, f)
 
 
@@ -30,12 +31,12 @@ def process_protein(protein_name, lock):
     mes_array = GPFToAnnealMESByEC.main(protein_name)
     lock.acquire()
     # print("Lock acquired by process on protein " + protein_name)
-    if exists("./annealbabyprots.json"):
-        with open("./annealbabyprots.json", 'r') as f:
+    if exists(FILE_LOCATION):
+        with open(FILE_LOCATION, 'r') as f:
             protein_dict = json.load(f)
     protein_dict[protein_name] = (hydrophobic_residues, mes_array[0], mes_array[1])
     # print("Dict modified by process on protein " + protein_name)
-    with open("./annealbabyprots.json", 'w') as f:
+    with open(FILE_LOCATION, 'w') as f:
         # print("File opened by process on protein " + protein_name)
         json.dump(protein_dict, f)
         print("Protein " + protein_name + " processed.")
