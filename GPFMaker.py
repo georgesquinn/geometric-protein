@@ -23,8 +23,8 @@ def main(protein_name):
     for chain in structure[0]:
         for residue in chain:
             resname = residue.get_resname()
-            if resname != "HOH" and resname != "STU" and resname != "EDO" and resname != "ZN" and resname != "GOL" and \
-                    resname != "CRO" and resname != "MG" and resname != "AZI" and resname != "MPD":
+            troublemakers = ["HOH", "STU", "EDO", "ZN", "GOL", "CRO", "MG", "AZI", "MPD", "GLC"]
+            if resname not in troublemakers:
                 # print(resname)
                 try:
                     ca_coords = residue['CA'].get_coord()
@@ -38,7 +38,9 @@ def main(protein_name):
                     ca_coords[2] * 100) + "\n")
         for residue in chain:
             resname = residue.get_resname()
-            if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" or resname == "ILE" or resname == "LEU" or resname == "TYR" or resname == "TRP":
+            residue_identities = ["ALA", "VAL", "PHE", "PRO", "MET", "ILE", "LEU", "ASP", "GLU", "LYS", "ARG", "SER",
+                                  "THR", "TYR", "HIS", "CYS", "ASN", "GLN", "TRP", "G2F", "NAG"]
+            if resname in residue_identities:
                 if resname == "ALA":
                     f.write("A ")
                 if resname == "VAL":
@@ -53,8 +55,28 @@ def main(protein_name):
                     f.write("I ")
                 if resname == "LEU":
                     f.write("L ")
+                if resname == "ASP":
+                    f.write("D ")
+                if resname == "GLU":
+                    f.write("E ")
+                if resname == "LYS":
+                    f.write("K ")
+                if resname == "ARG":
+                    f.write("R ")
+                if resname == "SER":
+                    f.write("S ")
+                if resname == "THR":
+                    f.write("T ")
                 if resname == "TYR":
                     f.write("Y ")
+                if resname == "HIS":
+                    f.write("H ")
+                if resname == "CYS":
+                    f.write("C ")
+                if resname == "ASN":
+                    f.write("N ")
+                if resname == "GLN":
+                    f.write("Q ")
                 if resname == "TRP":
                     f.write("W ")
                 try:

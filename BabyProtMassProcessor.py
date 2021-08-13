@@ -5,7 +5,6 @@ import GPFToMESByEC
 import concurrent.futures
 import multiprocessing as mp
 
-
 global protein_dict
 protein_dict = {}
 FILE_LOCATION = "./babyprots.json"
@@ -15,6 +14,7 @@ if exists(FILE_LOCATION):
 else:
     with open(FILE_LOCATION, 'w') as f:
         json.dump(protein_dict, f)
+
 
 def process_protein(protein_name, lock):
     hydrophobic_residues = 0
@@ -30,14 +30,16 @@ def process_protein(protein_name, lock):
     print("Now processing protein " + protein_name)
     mes_array = GPFToMESByEC.main(protein_name)
     lock.acquire()
-    # print("Lock acquired by process on protein " + protein_name)
+    print("Lock acquired by process on protein " + protein_name)
     if exists(FILE_LOCATION):
         with open(FILE_LOCATION, 'r') as f:
             protein_dict = json.load(f)
+    print(format(mes_array))
     protein_dict[protein_name] = (hydrophobic_residues, mes_array[0], mes_array[1])
-    # print("Dict modified by process on protein " + protein_name)
+    print("Dict modified by process on protein " + protein_name)
+    print(format(protein_dict))
     with open(FILE_LOCATION, 'w') as f:
-        # print("File opened by process on protein " + protein_name)
+        print("File opened by process on protein " + protein_name)
         json.dump(protein_dict, f)
         print("Protein " + protein_name + " processed.")
     lock.release()

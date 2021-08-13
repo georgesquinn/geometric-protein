@@ -21,7 +21,8 @@ def main(protein_name):
     for chain in structure[0]:
         for residue in chain:
             resname = residue.get_resname()
-            if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" or resname == "ILE" or resname == "LEU":
+            if resname == "ALA" or resname == "VAL" or resname == "PHE" or resname == "PRO" or resname == "MET" or \
+                    resname == "ILE" or resname == "LEU":
                 ca_vector = residue['CA'].get_vector()
                 cb_vector = residue['CB'].get_vector()
                 norm_ang = (cb_vector - ca_vector).normalized()
