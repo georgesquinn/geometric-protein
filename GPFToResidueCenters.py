@@ -16,19 +16,18 @@ def main(filename, config="default", desired_residues=None):
                 hpr_lines.append(line)
         config_results = GPFConfigParserDict.main(config)
         residue_lengths = config_results[0]
-        exemption_constant = config_results[1]
         hp_points = []
+        center_identities = []
         for line in hpr_lines:
             words = line.split()
-            xvec = float(words[4]) - float(words[1])
-            yvec = float(words[5]) - float(words[2])
-            zvec = float(words[6]) - float(words[3])
-            veclength = math.sqrt(xvec * xvec + yvec * yvec + zvec * zvec)
-            normvec = (xvec / veclength, yvec / veclength, zvec / veclength)
-            scaledvec = (0, 0, 0)
+            x_vector = float(words[4]) - float(words[1])
+            y_vector = float(words[5]) - float(words[2])
+            z_vector = float(words[6]) - float(words[3])
+            vector_length = math.sqrt(x_vector * x_vector + y_vector * y_vector + z_vector * z_vector)
+            normal_vector = (x_vector / vector_length, y_vector / vector_length, z_vector / vector_length)
             residue_length = residue_lengths[words[0]]
-            scaledvec = (normvec[0] * residue_length), normvec[1] * residue_length, normvec[2] * residue_length
+            scaled_vector = (normal_vector[0] * residue_length), normal_vector[1] * residue_length, normal_vector[2] * residue_length
             hp_points.append(
-                (float(words[1]) + scaledvec[0], float(words[2]) + scaledvec[1], float(words[3]) + scaledvec[2]))
-        # Order is ALWAYS A, V, F, P, M, I, L, Y, W
-        return hp_points, exemption_constant
+                (float(words[1]) + scaled_vector[0], float(words[2]) + scaled_vector[1], float(words[3]) + scaled_vector[2]))
+            center_identities.append(words[0])
+        return hp_points, center_identities
