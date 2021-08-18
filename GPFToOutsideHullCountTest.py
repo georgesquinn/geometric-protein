@@ -1,3 +1,3 @@
 import GPFToOutsideConvexHullCount
 
-GPFToOutsideConvexHullCount.main("1A0K")
+print(format(GPFToOutsideConvexHullCount.main("1B7U")))
